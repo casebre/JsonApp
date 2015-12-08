@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -98,10 +99,25 @@ public class MainActivity extends AppCompatActivity {
                 //HashMap<String, Double> temp = jsonObject.get
 
                 String weather = jsonObject.getString("weather");
-                String[] sub = weather.split(":");
-                for(int i = 0; i <= sub.length; i++) {
-                    Log.i("Item: ", sub[i]);
+
+                JSONArray jarray = new JSONArray(weather);
+
+
+                for(int i = 0; i < jarray.length(); i++) {
+                    JSONObject jpart = jarray.getJSONObject(i);
+
+                    Log.i("Main: ", jpart.getString("main"));
+                    Log.i("Description: ", jpart.getString("description"));
                 }
+
+                JSONObject temp = (JSONObject) jsonObject.get("main");
+                String city = jsonObject.getString("name");
+                Log.i("City: ", city);
+                Log.i("Temp: : ", String.valueOf(Double.valueOf(temp.getString("temp"))/32));
+                //Log.i("See: ", temp.getString("temp"));
+
+
+
 
 
 
